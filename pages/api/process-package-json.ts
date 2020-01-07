@@ -5,11 +5,6 @@ import convert from '../../api/addAttributes'
 import { NextApiRequest, NextApiResponse } from 'next'
 //import test from './test.json'
 
-interface Response {
-  statusCode: number
-  body: string
-}
-
 // better to run on tree process
 const getScopedAsDeps = o => {
   return Object.entries(o).map(([k, v]) => ({ name: k, version: v }))
