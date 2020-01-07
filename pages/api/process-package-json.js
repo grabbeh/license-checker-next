@@ -2,7 +2,6 @@ import _ from 'lodash'
 import semver from 'semver'
 import axios from 'axios'
 import convert from '../../api/addAttributes'
-import { NextApiRequest, NextApiResponse } from 'next'
 //import test from './test.json'
 
 // better to run on tree process
@@ -10,12 +9,7 @@ const getScopedAsDeps = o => {
   return Object.entries(o).map(([k, v]) => ({ name: k, version: v }))
 }
 
-const getDep = (
-  name: string,
-  version: string,
-  scoped: boolean,
-  error: string
-) => {
+const getDep = (name, version, scoped, error) => {
   return {
     name,
     parent: { name, version, licenses: [{ license: null, color: null }] },
@@ -24,7 +18,7 @@ const getDep = (
   }
 }
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async (req, res) => {
   try {
     let data = await checkInput(req.body)
     //let data = { name: 'Test package', msg: 'Hello World' }
@@ -154,13 +148,14 @@ const getTreeData = async dependencies => {
             latest: true
           }
           // if no dependencies return parent data
-        } else
+        } else {
           return {
             name,
             parent: await convert(picked),
             error: 'Latest version only',
             latest: true
           }
+        }
       }
     }
     return r
@@ -178,7 +173,7 @@ const getTreeData = async dependencies => {
   return valid
 }
 
-const convertURL = (url: string) => {
+const convertURL = url => {
   let urlParts = url.replace(/\/\s*$/, '').split('/')
   let rev = urlParts.slice(3)
   let version = rev[rev.length - 1]
