@@ -1,11 +1,10 @@
 import _ from 'lodash'
-import useSWR from 'swr'
-import blueoak from '@blueoak/list'
+import blueoak from '../json/blueoak.json'
 import getLicenseText from './getLicenseText'
 
 // convert BO license data into more accessible format
 const convert = o => {
-  return o.map(r => {
+  return o.ratings.map(r => {
     return {
       name: r.name,
       licenses: _.flatten(
