@@ -31,7 +31,7 @@ const UrlForm = ({ setLoading, setResponse }) => {
         })
         let { url } = values
         axios
-          .post('http://localhost:4000/api/process-package-json', { url })
+          .post('https://localhost:4000/api/process-package-json', { url })
           .then(r => {
             console.log(r)
             setResponse(r.data)

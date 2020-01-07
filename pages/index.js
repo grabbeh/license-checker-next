@@ -35,7 +35,7 @@ const Index = props => {
     if (url) {
       setLoading(true)
       axios
-        .post('http://localhost:4000/api/process-package-json', { url })
+        .post('https://localhost:4000/api/process-package-json', { url })
         .then(r => {
           setData(r.data)
           setFlat(r.data.flat)
