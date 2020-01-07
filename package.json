@@ -7,7 +7,7 @@
     "dev": "next -p 4000",
     "build": "next build",
     "start": "next start",
-    "start-next": "NODE_ENV=production forever start next -p 4000"
+    "start-next": "NODE_ENV=production forever start next start -p 4000"
   },
   "repository": {
     "type": "git",
