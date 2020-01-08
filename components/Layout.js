@@ -3,7 +3,6 @@ import Helmet from 'react-helmet'
 import Text from '../components/Text'
 import Link from '../components/Link'
 import { ThemeProvider } from 'emotion-theming'
-import { MDXProvider } from '@mdx-js/react'
 import theme from '../components/theme'
 import '../index.css'
 
@@ -39,9 +38,8 @@ const Layout = props => {
         <meta name='viewport' content='width=device-width' />
         <title>License checker</title>
       </Helmet>
-      <MDXProvider components={components}>
-        <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
-      </MDXProvider>
+
+      <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
     </div>
   )
 }
