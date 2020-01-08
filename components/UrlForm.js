@@ -25,31 +25,12 @@ const UrlForm = ({ setLoading, setResponse }) => {
       })}
       onSubmit={(values, { setSubmitting, setErrors }) => {
         setLoading(true)
-        setResponse(null)
         setErrors({
           url: false,
           serverError: false
         })
         let { url } = values
-        axios
-          .post(`${server}/process-package-json`, { url })
-          .then(r => {
-            console.log(r)
-            setResponse(r.data)
-            setSubmitting(false)
-            setLoading(false)
-            router.push(`/?url="${url}"`)
-          })
-          .catch(err => {
-            let error = 'Server error'
-            if (typeof err.response.data === 'string') error = err.response.data
-            setErrors({
-              // serverError: 'Server error'
-              serverError: error
-            })
-            setSubmitting(false)
-            setLoading(false)
-          })
+        router.push(`/?url=${url}`)
       }}
     >
       {props => {

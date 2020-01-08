@@ -4,10 +4,10 @@ import isJSON from 'validator/lib/isJSON'
 import Box from './Box'
 import Flex from './Flex'
 import Button from './Button'
-import axios from 'axios'
 import Error from './Error'
 import TextArea from './TextArea'
 import { server } from '../config/index'
+import fetch from 'isomorphic-unfetch'
 
 const UrlForm = ({ setLoading, setResponse }) => (
   <Formik
@@ -32,16 +32,18 @@ const UrlForm = ({ setLoading, setResponse }) => (
         serverError: false
       })
       let { json } = values
-      axios
-        .post(`${server}/process-package-json`, { json })
-        .then(r => {
-          console.log(r)
+
+      fetch(`${server}/process-package-json`, {
+        method: 'POST',
+        body: JSON.stringify({ json })
+      })
+        .then(r => r.json())
+        .then(json => {
           setSubmitting(false)
-          setResponse(r.data)
+          setResponse(json)
           setLoading(false)
         })
         .catch(err => {
-          console.log(err)
           let error = 'Server error'
           if (!err.response) error = 'Server timeout'
           if (err.response && typeof err.response.data === 'string') {

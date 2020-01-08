@@ -20,8 +20,8 @@ const getDep = (name, version, scoped, error) => {
 
 export default async (req, res) => {
   try {
-    let data = await checkInput(req.body)
-    //let data = { name: 'Test package', msg: 'Hello World' }
+    let data = await checkInput(JSON.parse(req.body))
+    // let data = { name: 'Test package', msg: 'Hello World' }
     if (!data.name) {
       res.status(400).send("This doesn't seem to be a valid package.json file")
     }

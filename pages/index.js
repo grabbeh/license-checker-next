@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import Intro from '../components/Intro'
-import axios from 'axios'
 import Box from '../components/Box'
 import Text from '../components/Text'
 import Layout from '../components/Layout'
@@ -16,56 +15,29 @@ import Loading from '../components/Loading'
 import AttributionList from '../components/AttributionList'
 import TreeVis from '../components/TreeVis'
 import Flex from '../components/Flex'
-import { useRouter } from 'next/router'
 import { server } from '../config/index'
+import fetch from 'isomorphic-unfetch'
 
 const Index = props => {
-  const router = useRouter()
+  let { serverData } = props
+
+  useEffect(() => {
+    if (serverData) {
+      setData(serverData)
+    }
+  }, [])
+
   let [data, setData] = useState(null)
   let [flat, setFlat] = useState(null)
   let [error, setError] = useState(null)
   let [loading, setLoading] = useState(false)
-  if (props.data) {
-    setData(props.data)
-    setFlat(props.data.flat)
-  }
-
-  useEffect(() => {
-    let { url } = router.query
-    if (url) {
-      setLoading(true)
-      axios
-        .post(`${server}/process-package-json`, { url })
-        .then(r => {
-          setData(r.data)
-          setFlat(r.data.flat)
-          setLoading(false)
-        })
-        .catch(err => {
-          let error = 'Server error'
-          if (typeof err.response.data === 'string') error = err.response.data
-          setError(error)
-          setLoading(false)
-        })
-    }
-  }, [])
-  /*
-  useEffect(() => {
-    const { data, error } = useSWR(
-      url ? ['/http://localhost:3000/api/process-package-json', url] : null
-    )
-    if (error) {
-      setError(error)
-    }
-    setData(data)
-    setFlat(data.flat)
-  }, [])*/
 
   return (
     <Layout>
       <Box>
         <Flex flexWrap='wrap'>
           <Box p={[2, 3]} width={[1, 0.4, 1 / 4]} minHeight={[1, '100vh']}>
+            <Box>Home</Box>
             <Box mb={2}>
               <Text fontSize={4} fontWeight='bold'>
                 Licence checker
@@ -85,7 +57,7 @@ const Index = props => {
             width={[1, 0.6, 3 / 4]}
             minHeight='100vh'
           >
-            {!loading && !data && (
+            {!loading && !data && !error && (
               <Box>
                 <Intro />
               </Box>
@@ -126,14 +98,13 @@ const Index = props => {
 export default Index
 
 Index.getInitialProps = async props => {
-  console.log(props)
-  /*
-  let { url } = props.query
-  const res = await axios(`${server}/api/process-package-json`, {
-    url
-  })
-  const data = await res.json()
-  console.log(`Show data fetched. Count: ${data.length}`)
-  return { data }*/
-  return {}
+  if (props.query.url) {
+    let { url } = props.query
+    const res = await fetch(`${server}/process-package-json`, {
+      body: JSON.stringify({ url }),
+      method: 'POST'
+    })
+    const data = await res.json()
+    return { serverData: data }
+  } else return {}
 }
