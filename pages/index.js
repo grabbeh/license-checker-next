@@ -35,7 +35,7 @@ const Index = props => {
     if (url) {
       setLoading(true)
       axios
-        .post(`${server}/api/process-package-json`, { url })
+        .post(`${server}/process-package-json`, { url })
         .then(r => {
           setData(r.data)
           setFlat(r.data.flat)
@@ -85,7 +85,7 @@ const Index = props => {
             width={[1, 0.6, 3 / 4]}
             minHeight='100vh'
           >
-            {!error && !data && (
+            {!loading && !data && (
               <Box>
                 <Intro />
               </Box>
@@ -124,13 +124,16 @@ const Index = props => {
 }
 
 export default Index
-/*
+
 Index.getInitialProps = async props => {
+  console.log(props)
+  /*
   let { url } = props.query
-  const res = await axios('http://localhost:3000/api/process-package-json', {
+  const res = await axios(`${server}/api/process-package-json`, {
     url
   })
   const data = await res.json()
   console.log(`Show data fetched. Count: ${data.length}`)
-  return { data }
-}*/
+  return { data }*/
+  return {}
+}

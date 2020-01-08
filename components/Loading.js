@@ -1,8 +1,5 @@
 import React, { Fragment } from 'react'
-// import Spinner from 'react-svg-spinner'
 import ContentLoader from 'react-content-loader'
-// import { Spinner } from '@zopauk/react-components'
-// import Flex from './Flex'
 
 const Loading = () => (
   <Fragment>

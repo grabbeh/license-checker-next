@@ -57,7 +57,7 @@ export default FullTable
 
 const Tr = styled('tr')`
   border: 1px solid black;
-  &:nth-child(even) {
+  &:nth-of-type(even) {
     background: rgba(42, 117, 146, 0.12);
   }
 `
