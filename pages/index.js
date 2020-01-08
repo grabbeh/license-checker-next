@@ -90,7 +90,7 @@ const Index = props => {
                 <Intro />
               </Box>
             )}
-            {!data && <Loading />}
+            {loading && <Loading />}
             {error && error}
             {data && (
               <Tabs>
