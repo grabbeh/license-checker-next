@@ -1,6 +1,7 @@
 import React from 'react'
 import { Formik, Form } from 'formik'
 import { string, object } from 'yup'
+import { server } from '../config/index'
 import { useRouter } from 'next/router'
 import Box from './Box'
 import Flex from './Flex'
@@ -31,7 +32,7 @@ const UrlForm = ({ setLoading, setResponse }) => {
         })
         let { url } = values
         axios
-          .post('https://localhost:4000/api/process-package-json', { url })
+          .post(`${server}/process-package-json`, { url })
           .then(r => {
             console.log(r)
             setResponse(r.data)
