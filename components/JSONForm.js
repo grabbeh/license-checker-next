@@ -7,6 +7,7 @@ import Button from './Button'
 import axios from 'axios'
 import Error from './Error'
 import TextArea from './TextArea'
+import { server } from '../config/index'
 
 const UrlForm = ({ setLoading, setResponse }) => (
   <Formik
@@ -32,7 +33,7 @@ const UrlForm = ({ setLoading, setResponse }) => (
       })
       let { json } = values
       axios
-        .post('/.netlify/functions/process-package-json', { json })
+        .post(`${server}/process-package-json`, { json })
         .then(r => {
           console.log(r)
           setSubmitting(false)
