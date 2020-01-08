@@ -20,11 +20,8 @@
   },
   "homepage": "https://github.com/grabbeh/license-checker-next#readme",
   "dependencies": {
-    "@blueoak/list": "^1.0.2",
     "@emotion/core": "^10.0.27",
     "@emotion/styled": "^10.0.27",
-    "@mdx-js/loader": "^1.5.3",
-    "@next/mdx": "^9.1.7",
     "@react-pdf/renderer": "^1.6.8",
     "@styled-system/prop-types": "^5.1.4",
     "@zeit/next-css": "^1.0.1",
@@ -46,8 +43,6 @@
     "react-svg-spinner": "^1.0.4",
     "react-tooltip": "^3.11.1",
     "styled-system": "^5.1.2",
-    "swr": "^0.1.16",
-    "to-style": "^1.3.3",
     "typescript": "^3.6.3",
     "validator": "^11.1.0",
     "yup": "^0.27.0"
