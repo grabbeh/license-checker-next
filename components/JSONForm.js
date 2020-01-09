@@ -9,7 +9,7 @@ import TextArea from './TextArea'
 import { server } from '../config/index'
 import fetch from 'isomorphic-unfetch'
 
-const UrlForm = ({ setLoading, setResponse }) => (
+const UrlForm = ({ setLoading, setData }) => (
   <Formik
     initialValues={{
       json: ''
@@ -26,7 +26,7 @@ const UrlForm = ({ setLoading, setResponse }) => (
     }}
     onSubmit={(values, { setSubmitting, setErrors }) => {
       setLoading(true)
-      setResponse(null)
+      setData(null)
       setErrors({
         json: false,
         serverError: false
@@ -40,7 +40,7 @@ const UrlForm = ({ setLoading, setResponse }) => (
         .then(r => r.json())
         .then(json => {
           setSubmitting(false)
-          setResponse(json)
+          setData(json)
           setLoading(false)
         })
         .catch(err => {

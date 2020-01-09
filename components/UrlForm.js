@@ -1,16 +1,14 @@
 import React from 'react'
 import { Formik, Form } from 'formik'
 import { string, object } from 'yup'
-import { server } from '../config/index'
 import { useRouter } from 'next/router'
 import Box from './Box'
 import Flex from './Flex'
 import Input from './Input'
 import Button from './Button'
 import Error from './Error'
-import axios from 'axios'
 
-const UrlForm = ({ setLoading, setResponse }) => {
+const UrlForm = () => {
   const router = useRouter()
   return (
     <Formik
@@ -23,8 +21,7 @@ const UrlForm = ({ setLoading, setResponse }) => {
           .url()
           .required('Please provide a valid url')
       })}
-      onSubmit={(values, { setSubmitting, setErrors }) => {
-        setLoading(true)
+      onSubmit={(values, { setErrors }) => {
         setErrors({
           url: false,
           serverError: false

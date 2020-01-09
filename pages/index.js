@@ -20,12 +20,11 @@ import fetch from 'isomorphic-unfetch'
 
 const Index = props => {
   let { serverData } = props
-
   useEffect(() => {
     if (serverData) {
       setData(serverData)
     }
-  }, [])
+  })
 
   let [data, setData] = useState(null)
   let [flat, setFlat] = useState(null)
@@ -43,7 +42,7 @@ const Index = props => {
                 Licence checker
               </Text>
             </Box>
-            <InputSideBar setLoading={setLoading} setResponse={setData} />
+            <InputSideBar setLoading={setLoading} setData={setData} />
             {data && (
               <ResultsSideBar
                 dependencies={data.flat}
