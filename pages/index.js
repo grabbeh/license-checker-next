@@ -23,6 +23,7 @@ const Index = props => {
   useEffect(() => {
     if (serverData) {
       setData(serverData)
+      setFlat(serverData.flat)
     }
   })
 
@@ -36,13 +37,24 @@ const Index = props => {
       <Box>
         <Flex flexWrap='wrap'>
           <Box p={[2, 3]} width={[1, 0.4, 1 / 4]} minHeight={[1, '100vh']}>
-            <Box>Home</Box>
+            <Box
+              style={{ cursor: 'pointer' }}
+              onClick={() => {
+                setData(false)
+              }}
+            >
+              Home
+            </Box>
             <Box mb={2}>
               <Text fontSize={4} fontWeight='bold'>
                 Licence checker
               </Text>
             </Box>
-            <InputSideBar setLoading={setLoading} setData={setData} />
+            <InputSideBar
+              setLoading={setLoading}
+              setFlat={setFlat}
+              setData={setData}
+            />
             {data && (
               <ResultsSideBar
                 dependencies={data.flat}
@@ -56,11 +68,7 @@ const Index = props => {
             width={[1, 0.6, 3 / 4]}
             minHeight='100vh'
           >
-            {!loading && !data && !error && (
-              <Box>
-                <Intro />
-              </Box>
-            )}
+            {!loading && !data && !error && <Intro />}
             {loading && <Loading />}
             {error && error}
             {data && (
@@ -81,8 +89,8 @@ const Index = props => {
                 </TabList>
                 <TabPanels>
                   <Tree tree={data.tree.children} />
-                  <Table dataRows={data.flat} />
-                  <AttributionList setDependencies={setFlat} deps={data.flat} />
+                  <Table dataRows={flat} />
+                  <AttributionList setDependencies={setFlat} deps={flat} />
                   <TreeVis tree={data.tree} />
                 </TabPanels>
               </Tabs>

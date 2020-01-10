@@ -14,12 +14,12 @@ const AttributionList = ({ deps, setDependencies }) => {
   let [editableIndex, setEditableIndex] = useState()
   let [editableLicenseIndex, setLicenseIndex] = useState()
 
-  const addLicense = (newLicense) => {
+  const addLicense = newLicense => {
     let { name, text } = newLicense
     let revised = {
       name,
       // TODO: Set licenses from dropdown
-      licenses: [{text, license: null}]
+      licenses: [{ text, license: null }]
     }
     let newDeps = [...deps, revised]
     setDependencies(newDeps)
@@ -79,10 +79,11 @@ const AttributionList = ({ deps, setDependencies }) => {
           <PDFGenerator deps={deps} />
         </Box>
       </Flex>
-      { showNewForm &&
-      <Box>
-        <NewLicenseForm addLicense={addLicense} />
-      </Box>}
+      {showNewForm && (
+        <Box>
+          <NewLicenseForm addLicense={addLicense} />
+        </Box>
+      )}
       {deps.map((d, dependencyIndex) => {
         return d.licenses.map(({ text }, licenseIndex) => {
           return (
@@ -92,66 +93,76 @@ const AttributionList = ({ deps, setDependencies }) => {
                   {d.name}
                 </Text>
               </Box>
-              {!text && !editableIndex && <Box mt={2}><Text>We couldn't find any text</Text></Box>}
+              {!text && !editableIndex && (
+                <Box mt={2}>
+                  <Text>We couldn't find any text</Text>
+                </Box>
+              )}
               {editableIndex === dependencyIndex &&
-                editableLicenseIndex === licenseIndex ? (
-                  <Box mt={2}>
-                    <TextArea
-                      handleChange={e => {
-                        setLicense(e.target.value)
-                      }}
-                      value={licenseText}
-                      height={400}
-                      name='licenseText'
-                      placeholder='Enter a license'
-                    />
-                    <Box my={2}>
-                      <Flex flexWrap='wrap'>
+              editableLicenseIndex === licenseIndex ? (
+                <Box mt={2}>
+                  <TextArea
+                    handleChange={e => {
+                      setLicense(e.target.value)
+                    }}
+                    value={licenseText}
+                    height={400}
+                    name='licenseText'
+                    placeholder='Enter a license'
+                  />
+                  <Box my={2}>
+                    <Flex flexWrap='wrap'>
+                      <Button
+                        onClick={() => {
+                          submitLicense()
+                        }}
+                      >
+                        Submit
+                      </Button>
+                      <Box ml={3}>
                         <Button
                           onClick={() => {
-                            submitLicense()
+                            setEditableIndex(null)
+                            setLicense(null)
                           }}
                         >
-                            Submit
+                          Cancel
                         </Button>
-                        <Box ml={3}>
-                          <Button
-                            onClick={() => {
-                              setEditableIndex(null)
-                              setLicense(null)
-                            }}
-                          >
-                            Cancel
-                          </Button>
-                        </Box>
-                      </Flex>
-                    </Box>
+                      </Box>
+                    </Flex>
                   </Box>
-              ) : <Box><Box mb={2} style={{overflowX: 'auto'}}><Text fontSize={[1,2]}><pre>{text}</pre></Text></Box>
-                <Flex flexWrap='wrap'>
-                  <Button
-                    onClick={() => {
-                      deleteLicense(dependencyIndex, licenseIndex)
-                    }}
-                  >
-                    Delete
-                    <FaTrashAlt style={{marginLeft: '10px'}}/>   
-                  </Button>
-                  <Box ml={3}>
+                </Box>
+              ) : (
+                <Box>
+                  <Box mb={2} style={{ overflowX: 'auto' }}>
+                    <Text fontSize={[1, 2]}>
+                      <pre>{text}</pre>
+                    </Text>
+                  </Box>
+                  <Flex flexWrap='wrap'>
                     <Button
                       onClick={() => {
-                        setEditableIndex(dependencyIndex)
-                        setLicenseIndex(licenseIndex)
-                        setLicense(text)
+                        deleteLicense(dependencyIndex, licenseIndex)
                       }}
                     >
-                      Edit
-                     <FaEdit style={{marginLeft: '10px'}}/>   
-                  
+                      Delete
+                      <FaTrashAlt style={{ marginLeft: '10px' }} />
                     </Button>
-                  </Box>
-                </Flex>
-              </Box>}
+                    <Box ml={3}>
+                      <Button
+                        onClick={() => {
+                          setEditableIndex(dependencyIndex)
+                          setLicenseIndex(licenseIndex)
+                          setLicense(text)
+                        }}
+                      >
+                        Edit
+                        <FaEdit style={{ marginLeft: '10px' }} />
+                      </Button>
+                    </Box>
+                  </Flex>
+                </Box>
+              )}
             </Box>
           )
         })

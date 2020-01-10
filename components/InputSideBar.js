@@ -8,7 +8,7 @@ import JSONForm from './JSONForm'
 import Text from '../components/Text'
 
 const InputSideBar = props => {
-  let { setLoading, setData } = props
+  let { setLoading, setData, setFlat } = props
   return (
     <Tabs>
       <TabList>
@@ -20,8 +20,8 @@ const InputSideBar = props => {
         </Tab>
       </TabList>
       <TabPanels>
-        <UrlForm setLoading={setLoading} />
-        <JSONForm setLoading={setLoading} setData={setData} />
+        <UrlForm setLoading={setLoading} setFlat={setFlat} setData={setData} />
+        <JSONForm setLoading={setLoading} setFlat={setFlat} setData={setData} />
       </TabPanels>
     </Tabs>
   )
