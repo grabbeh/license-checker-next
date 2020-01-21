@@ -26,7 +26,7 @@ const JSONForm = props => {
         }
         return errors
       }}
-      onSubmit={(values, { setSubmitting, setErrors }) => {
+      onSubmit={(values, { setSubmitting, setErrors, resetForm }) => {
         setLoading(true)
         setData(null)
         setErrors({
@@ -34,7 +34,6 @@ const JSONForm = props => {
           serverError: false
         })
         let { json } = values
-
         fetch(`${server}/process-package-json`, {
           method: 'POST',
           body: JSON.stringify({ json })
@@ -45,6 +44,7 @@ const JSONForm = props => {
             setData(json)
             setFlat(json.flat)
             setLoading(false)
+            resetForm()
           })
           .catch(err => {
             let error = 'Server error'

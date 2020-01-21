@@ -12,7 +12,6 @@ const Layout = props => {
         <meta name='viewport' content='width=device-width' />
         <title>License checker</title>
       </Helmet>
-
       <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
     </div>
   )

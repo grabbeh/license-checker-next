@@ -6,7 +6,7 @@ import Summary from './Summary'
 const ResultsSideBar = ({ dependencies, name }) => {
   return (
     <Box borderRadius={3} mt={3} bg='light-gray' p={[2, 3]}>
-      <Text color='black' fontSize={2} fontWeight='bold'>
+      <Text color='black' fontSize={4} fontWeight='bold'>
         Results
       </Text>
       <Box>

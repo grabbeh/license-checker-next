@@ -17,9 +17,11 @@ import TreeVis from '../components/TreeVis'
 import Flex from '../components/Flex'
 import { server } from '../config/index'
 import fetch from 'isomorphic-unfetch'
+import { useRouter } from 'next/router'
 
 const Index = props => {
   let { serverData } = props
+  const Router = useRouter()
   useEffect(() => {
     if (serverData) {
       setData(serverData)
@@ -32,6 +34,15 @@ const Index = props => {
   let [error, setError] = useState(null)
   let [loading, setLoading] = useState(false)
 
+  const goHome = () => {
+    useEffect(() => {
+      console.log('Clicked')
+      setData(false)
+      setFlat(false)
+      Router.push('/')
+    })
+  }
+
   return (
     <Layout>
       <Box>
@@ -40,7 +51,7 @@ const Index = props => {
             <Box
               style={{ cursor: 'pointer' }}
               onClick={() => {
-                setData(false)
+                goHome()
               }}
             >
               Home

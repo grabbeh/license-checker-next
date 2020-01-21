@@ -24,7 +24,9 @@ const UrlForm = props => {
           .url()
           .required('Please provide a valid url')
       })}
-      onSubmit={(values, { setErrors }) => {
+      onSubmit={(values, { setErrors, resetForm }) => {
+        setData(false)
+        setFlat(false)
         setLoading(true)
         setErrors({
           url: false,
@@ -40,6 +42,7 @@ const UrlForm = props => {
             setData(json)
             setFlat(json.flat)
             setLoading(false)
+            resetForm()
           })
           .catch(err => {
             let error = 'Server error'
